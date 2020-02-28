@@ -1,14 +1,8 @@
-/*
- *
- * DataGrid reducer
- *
- */
-
 import ActionTypes from './constants';
 import { ContainerState, ContainerActions } from './types';
 
 export const initialState: ContainerState = {
-  default: null,
+  counter: 0,
 };
 
 function dataGridReducer(
@@ -16,8 +10,8 @@ function dataGridReducer(
   action: ContainerActions,
 ): ContainerState {
   switch (action.type) {
-    case ActionTypes.DEFAULT_ACTION:
-      return state;
+    case ActionTypes.UPDATE_COUNTER:
+      return { ...state, counter: action.payload };
     default:
       return state;
   }

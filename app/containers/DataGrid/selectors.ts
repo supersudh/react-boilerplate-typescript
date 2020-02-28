@@ -7,7 +7,7 @@ import { initialState } from './reducer';
  */
 
 const selectDataGridDomain = (state: ApplicationRootState) => {
-  return state || initialState;
+  return state.dataGrid || initialState;
 };
 
 /**

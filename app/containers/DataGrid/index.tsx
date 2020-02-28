@@ -1,33 +1,37 @@
-/*
- *
- * DataGrid
- *
- */
-
-import React, { memo } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import React from 'react';
+import { bindActionCreators } from 'redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 
-import { useInjectSaga } from 'utils/injectSaga';
 import { useInjectReducer } from 'utils/injectReducer';
-import makeSelectDataGrid from './selectors';
+import { useInjectSaga } from 'utils/injectSaga';
+
+import * as dataGridActions from './actions';
 import reducer from './reducer';
 import saga from './saga';
+import makeSelectDataGrid from './selectors';
+
+import DataGrid from './DataGrid';
+
+const key = 'dataGrid';
 
 const stateSelector = createStructuredSelector({
   dataGrid: makeSelectDataGrid(),
 });
 
-interface Props { }
 
-function DataGrid(props: Props) {
-  // Warning: Add your key to RootState in types/index.d.ts file
-  useInjectReducer({ key: 'dataGrid', reducer: reducer });
-  useInjectSaga({ key: 'dataGrid', saga: saga });
+export default function() {
+  useInjectReducer({ key, reducer: reducer });
+  useInjectSaga({ key, saga: saga });
+
+  const dispatch = useDispatch();
+  const allDispatches = bindActionCreators(dataGridActions, dispatch);
 
   const { dataGrid } = useSelector(stateSelector);
-  const dispatch = useDispatch();
-  return <div>DataGrid</div>;
+  return (
+    <DataGrid
+      dataGrid={dataGrid}
+      {...allDispatches}
+    />
+  );
 }
-
-export default memo(DataGrid);

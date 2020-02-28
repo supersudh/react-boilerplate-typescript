@@ -4,7 +4,7 @@ import { ApplicationRootState } from 'types';
 
 /* --- STATE --- */
 interface DataGridState {
-  readonly default: any;
+  readonly counter: any;
 }
 
 /* --- ACTIONS --- */
